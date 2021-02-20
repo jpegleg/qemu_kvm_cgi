@@ -34,5 +34,16 @@ cloneSuseStable() {
 }
 
 cloneKaliRolling() {
-  virt-clonen --original kalirollng --auto-clone | grep successfully | cut -d' ' -f2 | xargs virsh start || yellRetry
+  virt-clone --original kalirollng --auto-clone | grep successfully | cut -d' ' -f2 | xargs virsh start || yellRetry
 }
+
+retryFail() {
+  sleep 1 && makeSession || yellRetry
+}
+
+makeSession() {
+  pullSession || retryFail
+  exportSession || retryFail
+}
+
+  
